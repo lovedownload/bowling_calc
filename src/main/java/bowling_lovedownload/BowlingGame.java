@@ -278,13 +278,14 @@ public class BowlingGame {
 		{
 			pin_value += gutterCheck(i);
 			score = score + pin[i] + pin[i+1];
-			SrtringFormatTenFrame(i);
+			StringFormatGutterFrame(i);
 		}
 	}
 	
-	//10프레임 점수 표시를 위한 함수 (10프레임의 보너스 프레임이 추가 되지 않았을 경우 발생)
-	public void SrtringFormatTenFrame(int i)
+	//스트라이크나 스페어 처리가 되지 않았을 경우 값을 출력하는 함수 (10프레임의 보너스 프레임이 발생하지 않았을 경우 넓이를 맞추기 위해 함수를 분리) 
+	public void StringFormatGutterFrame(int i)
 	{
+		//10프레임일 경우 
 		if(i == 18)
 		{
 			score_value += String.format("%5d|", score);
