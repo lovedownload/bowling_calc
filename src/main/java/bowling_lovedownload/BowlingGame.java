@@ -4,14 +4,12 @@ import java.util.Scanner;
 
 public class BowlingGame {
 	
-	public int user;
-	
 	private int[] pin = new int[24];                    //쓰러뜨린 핀의 배열 
 	private int strike = 0;                             //스트라이크면 증가하는 변수 
 	private int spare = 0;                 				//스페어면 증가하는 변수 
 	private int score = 0; 								//스코어 변수 (누적됨)
 	//private int lastI = 0;
-	private int lastJ = 0;								//보너스 프레임 처리를 위해 10프레임의 for문의 마지막 J값을 저장하는 변
+	private int lastJ = 0;								//보너스 프레임 처리를 위해 10프레임의 for문의 마지막 J값을 저장하는 변수 
 	private String pin_value = "";                      //쓰러뜨린 핀의 개수를 보여주기 위한 변수 (화면 출력 시 사용됨) 
 	private String score_value = "";                    //점수의 합계를 보여주기 위한 변수  (화면 출력 시 사용됨)
 	private Scanner clearpin = new Scanner(System.in);  //핀을 입력받기 위한 Scanner 객체 
@@ -282,7 +280,7 @@ public class BowlingGame {
 		}
 	}
 	
-	//스트라이크나 스페어 처리가 되지 않았을 경우 값을 출력하는 함수 (10프레임의 보너스 프레임이 발생하지 않았을 경우 넓이를 맞추기 위해 함수를 분리) 
+	//스트라이크나 스페어 처리가 되지 않았을 경우 값을 출력하는 함수 (10프레임의 보너스 프레임이 발생하지 않았을 경우 화 넓이를 맞추기 위해 함수를 분리) 
 	public void StringFormatGutterFrame(int i)
 	{
 		//10프레임일 경우 
