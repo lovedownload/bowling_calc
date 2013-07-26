@@ -146,34 +146,13 @@ public class BowlingGame {
 			System.out.println("최종 점수는 " + score + "점입니다.");
 			throw new GameOverException();
 		} catch (GameOverException e) {
+			System.out.println();
 			e.printStackTrace();
 		}
 	}
 	
-	public void PinIsNumberCheck(int i) {
-		Boolean result = false;
-		
-		do
-		{
-			try
-			{
-				System.out.println("입력된 핀의 값이 문자입니다. 0 ~ 10 사이의 숫자만 입력해 주세요.");
-				System.out.print("입력 : ");		
-				pin[i] = clearpin.nextInt();
-				result = true;
-				break;
-			}
-			catch (Exception ex){
-				
-			}
-		}while(!result);
-		
-		return;
-	}
-	
 	//첫번째 입력받은 핀의 유효성 검사 (0 ~ 10)
 	public int FirstPinCheck(int first_pin, int i) {
-		
 		
 		while(first_pin < 0 || first_pin > 10)
 		{		
