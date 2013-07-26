@@ -40,8 +40,8 @@ public class bowlingTest {
 			//첫번째 핀의 값 입력 
 			System.out.println();
 			System.out.print(((i + 2) / 2) + " 프레임 첫번째 : ");
-			first_pin = clearpin.nextInt();
 			
+			first_pin = clearpin.nextInt(); 
 		
 			//첫번째 핀의 유효성 검사 
 			first_pin = bg.FirstPinCheck(first_pin, i);
