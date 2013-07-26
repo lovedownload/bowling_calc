@@ -37,11 +37,19 @@ public class bowlingTest {
 			//첫번째 핀의 값 입력 
 			System.out.println();
 			System.out.print(((i + 2) / 2) + " 프레임 첫번째 : ");
-		
 			first_pin = clearpin.nextInt();
 			
+			/*try
+			{
+				first_pin = clearpin.nextInt();
+			}
+			catch (Exception ex)
+			{
+				bg.PinIsNumberCheck(i);
+			}*/
+			
 			//첫번째 핀의 유효성 검사 
-			bg.FirstPinCheck(first_pin, i);
+			first_pin = bg.FirstPinCheck(first_pin, i);
 			
 			//첫번째 핀의 값 설정 
 			bg.SetFirstPin(first_pin, i);
@@ -64,7 +72,7 @@ public class bowlingTest {
 				secound_pin = clearpin.nextInt();
 				
 				//두번째 핀의 유효성 검사 
-				bg.SecoundPinCheck(secound_pin, i);
+				secound_pin = bg.SecoundPinCheck(secound_pin, i);
 				
 				//두번째 핀의 값 설정 
 				bg.SetSecoundPin(secound_pin, i);

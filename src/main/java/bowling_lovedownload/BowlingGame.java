@@ -140,34 +140,61 @@ public class BowlingGame {
 
 	//게임 완료 처리 
 	public void GameOver() {
-		System.out.println();
-		System.out.println("게임이 종료되었습니다.");
-		System.out.println("최종 점수는 " + score + "점입니다.");
+		try {
+			System.out.println();
+			System.out.println("게임이 종료되었습니다.");
+			System.out.println("최종 점수는 " + score + "점입니다.");
+			throw new GameOverException();
+		} catch (GameOverException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void PinIsNumberCheck(int i) {
+		Boolean result = false;
+		
+		do
+		{
+			try
+			{
+				System.out.println("입력된 핀의 값이 문자입니다. 0 ~ 10 사이의 숫자만 입력해 주세요.");
+				System.out.print("입력 : ");		
+				pin[i] = clearpin.nextInt();
+				result = true;
+				break;
+			}
+			catch (Exception ex){
+				
+			}
+		}while(!result);
+		
 		return;
 	}
 	
 	//첫번째 입력받은 핀의 유효성 검사 (0 ~ 10)
-	public void FirstPinCheck(int first_pin, int i) {
+	public int FirstPinCheck(int first_pin, int i) {
+		
 		
 		while(first_pin < 0 || first_pin > 10)
 		{		
 			System.out.println("0 ~ 10 사이의 숫자를 입력하세요.");
 			System.out.print("입력 : ");		
-			pin[i] = clearpin.nextInt();	
+			first_pin = clearpin.nextInt();	
+			
 		}	
-		return;
+		return first_pin;
 	}
 	
 	//두번째 입력받은 핀의 유효성 검사 (첫번째 핀과의 합이 10을 초과해서는 안됨)
-	public void SecoundPinCheck(int secound_pin, int i) {
+	public int SecoundPinCheck(int secound_pin, int i) {
 		
-		while(secound_pin + pin[i] > 10)
+		while(secound_pin + pin[i] > 10 || secound_pin + pin[i] < 0)
 		{
 			System.out.println("핀의 합계는 10을 초과할 수 없습니다. 다시 입력하세요.");
 			System.out.print("입력 : ");
-			pin[i+1] = clearpin.nextInt();
+			secound_pin = clearpin.nextInt();
 		}	
-		return;
+		return secound_pin;
 	}
 	
 	//중간단걔의 점수 계산 및 화면 출력을 위한 함수 (스트라이크가 아닐 경우만 호출)
