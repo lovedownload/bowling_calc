@@ -13,72 +13,72 @@ public class bowlingTest {
 	@Before
 	public void Setup()
 	{
-		//°´Ã¼ ¼³Á¤ 
+		Scanner clearpin = new Scanner(System.in);   // input scanner
 		bg = new BowlingGame();
 	}
 	
 	@Test
 	public void Roll() 
 	{	
-		Scanner clearpin = new Scanner(System.in);   //ÇÉ °ªÀ» ÀÔ·Â ¹Ş±â À§ÇÑ °´Ã¼ ¼³Á¤ 
-		int first_pin = 0;                           //Ã¹¹øÂ° ÇÉÀÇ ÀÔ·Â °ª 
-		int secound_pin = 0;                         //µÎ¹øÂ° ÇÉÀÇ ÀÔ·Â °ª 
-		int lastI = 0;                               //10 ÇÁ·¹ÀÓ Ã³¸®¸¦ À§ÇÑ for¹®ÀÇ ¸¶Áö¸· °ª 
+		Scanner clearpin = new Scanner(System.in);   //í•€ ê°’ì„ ì…ë ¥ ë°›ê¸° ìœ„í•œ ê°ì²´ ì„¤ì • 
+		int first_pin = 0;                           //ì²«ë²ˆì§¸ í•€ì˜ ì…ë ¥ ê°’ 
+		int secound_pin = 0;                         //ë‘ë²ˆì§¸ í•€ì˜ ì…ë ¥ ê°’ 
+		int lastI = 0;                               //10 í”„ë ˆì„ ì²˜ë¦¬ë¥¼ ìœ„í•œ forë¬¸ì˜ ë§ˆì§€ë§‰ ê°’ 
 		
-		System.out.println("°ÔÀÓÀ» ½ÃÀÛÇÕ´Ï´Ù. ¸ğµç °ªÀº ¼ıÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä. (Strike 10, ±× ¿Ü 0 ~ 9)");
+		System.out.println("ê²Œì„ì„ ì‹œì‘í•©ë‹ˆë‹¤. ëª¨ë“  ê°’ì€ ìˆ«ìë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”. (Strike 10, ê·¸ ì™¸ 0 ~ 9)");
 		System.out.println();
 		
 		for(int i = 0; i < 19; i = i + 2)
 		{	
-			//10 ÇÁ·¹ÀÓ ½ÃÀÛ ½Ã for¹®À» ºüÁ® ³ª°¨ 
+			//10 í”„ë ˆì„ ì‹œì‘ ì‹œ forë¬¸ì„ ë¹ ì ¸ ë‚˜ê° 
 			if(i == 18)
 			{
 				lastI = i;
 				break;
 			}
 			
-			//Ã¹¹øÂ° ÇÉÀÇ °ª ÀÔ·Â 
+			//ì²«ë²ˆì§¸ í•€ì˜ ê°’ ì…ë ¥ 
 			System.out.println();
-			System.out.print(((i + 2) / 2) + " ÇÁ·¹ÀÓ Ã¹¹øÂ° : ");
+			System.out.print(((i + 2) / 2) + " í”„ë ˆì„ ì²«ë²ˆì§¸ : ");
 			
 			first_pin = clearpin.nextInt(); 
 		
-			//Ã¹¹øÂ° ÇÉÀÇ À¯È¿¼º °Ë»ç 
+			//ì²«ë²ˆì§¸ í•€ì˜ ìœ íš¨ì„± ê²€ì‚¬ 
 			first_pin = bg.FirstPinCheck(first_pin, i);
 			
-			//Ã¹¹øÂ° ÇÉÀÇ °ª ¼³Á¤ 
+			//ì²«ë²ˆì§¸ í•€ì˜ ê°’ ì„¤ì • 
 			bg.SetFirstPin(first_pin, i);
 			
 			if(first_pin == 10)
 			{
-				//½ºÆ®¶óÀÌÅ© Ã³¸® 
+				//ìŠ¤íŠ¸ë¼ì´í¬ ì²˜ë¦¬ 
 				bg.Strike(i);
 				continue;
 			}
 			
 			if(first_pin < 10)
 			{
-				//Áß°£´Ü°èÀÇ °á°ú °ª Ã³¸® 
+				//ì¤‘ê°„ë‹¨ê³„ì˜ ê²°ê³¼ ê°’ ì²˜ë¦¬ 
 				bg.SpareScore(i);
 				
-				//µÎ¹øÂ° ÇÉÀÇ °ª ÀÔ·Â 
+				//ë‘ë²ˆì§¸ í•€ì˜ ê°’ ì…ë ¥ 
 				System.out.println();
-				System.out.print(((i + 2) / 2) + " ÇÁ·¹ÀÓ µÎ¹øÂ° : ");	
+				System.out.print(((i + 2) / 2) + " í”„ë ˆì„ ë‘ë²ˆì§¸ : ");	
 				secound_pin = clearpin.nextInt();
 				
 				
-				//µÎ¹øÂ° ÇÉÀÇ À¯È¿¼º °Ë»ç 
+				//ë‘ë²ˆì§¸ í•€ì˜ ìœ íš¨ì„± ê²€ì‚¬ 
 				secound_pin = bg.SecoundPinCheck(secound_pin, i);
 				
-				//µÎ¹øÂ° ÇÉÀÇ °ª ¼³Á¤ 
+				//ë‘ë²ˆì§¸ í•€ì˜ ê°’ ì„¤ì • 
 				bg.SetSecoundPin(secound_pin, i);
 				
-				//½ºÆä¾î Ã³¸® 
+				//ìŠ¤í˜ì–´ ì²˜ë¦¬ 
 				bg.Spare(i);
 			}
 		}
 		
-		//10 ÇÁ·¹ÀÓ Ã³¸®
+		//10 í”„ë ˆì„ ì²˜ë¦¬
 		bg.TenFrame(lastI);
 	}
 }
