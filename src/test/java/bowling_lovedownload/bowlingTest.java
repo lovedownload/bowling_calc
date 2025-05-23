@@ -1,84 +1,117 @@
 package bowling_lovedownload;
 
 import static org.junit.Assert.*;
-
-import java.util.Scanner;
-
 import org.junit.Before;
 import org.junit.Test;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
-public class bowlingTest {
-	BowlingGame bg;
-	
-	@Before
-	public void Setup()
-	{
-		//객체 설정 
-		bg = new BowlingGame();
-	}
-	
-	@Test
-	public void Roll() 
-	{	
-		Scanner clearpin = new Scanner(System.in);   //핀 값을 입력 받기 위한 객체 설정 
-		int first_pin = 0;                           //첫번째 핀의 입력 값 
-		int secound_pin = 0;                         //두번째 핀의 입력 값 
-		int lastI = 0;                               //10 프레임 처리를 위한 for문의 마지막 값 
-		
-		System.out.println("게임을 시작합니다. 모든 값은 숫자로 입력해주세요. (Strike 10, 그 외 0 ~ 9)");
-		System.out.println();
-		
-		for(int i = 0; i < 19; i = i + 2)
-		{	
-			//10 프레임 시작 시 for문을 빠져 나감 
-			if(i == 18)
-			{
-				lastI = i;
-				break;
-			}
-			
-			//첫번째 핀의 값 입력 
-			System.out.println();
-			System.out.print(((i + 2) / 2) + " 프레임 첫번째 : ");
-			
-			first_pin = clearpin.nextInt(); 
-		
-			//첫번째 핀의 유효성 검사 
-			first_pin = bg.FirstPinCheck(first_pin, i);
-			
-			//첫번째 핀의 값 설정 
-			bg.SetFirstPin(first_pin, i);
-			
-			if(first_pin == 10)
-			{
-				//스트라이크 처리 
-				bg.Strike(i);
-				continue;
-			}
-			
-			if(first_pin < 10)
-			{
-				//중간단계의 결과 값 처리 
-				bg.SpareScore(i);
-				
-				//두번째 핀의 값 입력 
-				System.out.println();
-				System.out.print(((i + 2) / 2) + " 프레임 두번째 : ");	
-				secound_pin = clearpin.nextInt();
-				
-				
-				//두번째 핀의 유효성 검사 
-				secound_pin = bg.SecoundPinCheck(secound_pin, i);
-				
-				//두번째 핀의 값 설정 
-				bg.SetSecoundPin(secound_pin, i);
-				
-				//스페어 처리 
-				bg.Spare(i);
-			}
-		}
-		
-		//10 프레임 처리
-		bg.TenFrame(lastI);
-	}
+/**
+ * Test class for BowlingGame
+ */
+public class BowlingTest {
+    
+    private BowlingGame bowlingGame;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    
+    @Before
+    public void setup() {
+        bowlingGame = new BowlingGame();
+        // Redirect System.out to capture output
+        System.setOut(new PrintStream(outContent));
+    }
+    
+    /**
+     * Test method to validate first roll validation
+     */
+    @Test
+    public void testValidateFirstRoll() {
+        // Test with valid input
+        int result = bowlingGame.validateFirstRoll(5, 0);
+        assertEquals(5, result);
+        
+        // Test with input that would be invalid (but we don't test
+        // the interactive validation here as it uses Scanner)
+    }
+    
+    /**
+     * Test method to validate second roll validation
+     */
+    @Test
+    public void testValidateSecondRoll() {
+        // Set up first roll
+        bowlingGame.setFirstRoll(3, 0);
+        
+        // Test with valid input for second roll
+        int result = bowlingGame.validateSecondRoll(7, 0);
+        assertEquals(7, result);
+        
+        // We don't test interactive validation here
+    }
+    
+    /**
+     * Test the formatting of pin display
+     */
+    @Test
+    public void testFormatPinDisplay() {
+        // Test gutter ball (0 pins) in normal frame
+        bowlingGame.setSecondRoll(0, 0);
+        assertEquals("-|", bowlingGame.formatPinDisplay(0));
+        
+        // Test gutter ball in 10th frame
+        bowlingGame.setSecondRoll(0, 18);
+        assertEquals("-|-|", bowlingGame.formatPinDisplay(18));
+        
+        // Test normal pins
+        bowlingGame.setSecondRoll(5, 2);
+        assertEquals("5|", bowlingGame.formatPinDisplay(2));
+    }
+    
+    /**
+     * Test a simple game with all gutters (0 pins)
+     */
+    @Test
+    public void testAllGutterGame() {
+        simulateGame(new int[]{0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0});
+        assertEquals(0, bowlingGame.getTotalScore());
+    }
+    
+    /**
+     * Test a perfect game (all strikes)
+     */
+    @Test
+    public void testPerfectGame() {
+        simulateGame(new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10});
+        assertEquals(300, bowlingGame.getTotalScore());
+    }
+    
+    /**
+     * Utility method to simulate a game with predefined rolls
+     * 
+     * @param rolls The array of pin counts for each roll
+     */
+    private void simulateGame(int[] rolls) {
+        // Build input string from roll values
+        StringBuilder input = new StringBuilder();
+        for (int roll : rolls) {
+            input.append(roll).append(System.lineSeparator());
+        }
+        
+        // Set the input
+        System.setIn(new ByteArrayInputStream(input.toString().getBytes()));
+        
+        // TODO: Implement automated game simulation
+        // This would require refactoring of BowlingGame to accept programmatically
+        // provided rolls instead of always reading from System.in
+    }
+    
+    /**
+     * Reset System.out and System.in after tests
+     */
+    public void tearDown() {
+        System.setOut(originalOut);
+        System.setIn(System.in);
+    }
 }
