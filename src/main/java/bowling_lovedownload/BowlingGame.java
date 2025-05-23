@@ -4,21 +4,21 @@ import java.util.Scanner;
 
 public class BowlingGame {
 	
-	private int[] pin = new int[24];                    //¾²·¯¶ß¸° ÇÉÀÇ ¹è¿­ 
-	private int strike = 0;                             //½ºÆ®¶óÀÌÅ©¸é Áõ°¡ÇÏ´Â º¯¼ö 
-	private int spare = 0;                 				//½ºÆä¾î¸é Áõ°¡ÇÏ´Â º¯¼ö 
-	private int score = 0; 								//½ºÄÚ¾î º¯¼ö (´©ÀûµÊ)
+	private int[] pin = new int[24];                    //ì“°ëŸ¬ëœ¨ë¦° í•€ì˜ ë°°ì—´ 
+	private int strike = 0;                             //ìŠ¤íŠ¸ë¼ì´í¬ë©´ ì¦ê°€í•˜ëŠ” ë³€ìˆ˜ 
+	private int spare = 0;                 				//ìŠ¤í˜ì–´ë©´ ì¦ê°€í•˜ëŠ” ë³€ìˆ˜ 
+	private int score = 0; 								//ìŠ¤ì½”ì–´ ë³€ìˆ˜ (ëˆ„ì ë¨)
 	//private int lastI = 0;
-	private int lastJ = 0;								//º¸³Ê½º ÇÁ·¹ÀÓ Ã³¸®¸¦ À§ÇØ 10ÇÁ·¹ÀÓÀÇ for¹®ÀÇ ¸¶Áö¸· J°ªÀ» ÀúÀåÇÏ´Â º¯¼ö 
-	private String pin_value = "";                      //¾²·¯¶ß¸° ÇÉÀÇ °³¼ö¸¦ º¸¿©ÁÖ±â À§ÇÑ º¯¼ö (È­¸é Ãâ·Â ½Ã »ç¿ëµÊ) 
-	private String score_value = "";                    //Á¡¼öÀÇ ÇÕ°è¸¦ º¸¿©ÁÖ±â À§ÇÑ º¯¼ö  (È­¸é Ãâ·Â ½Ã »ç¿ëµÊ)
-	private Scanner clearpin = new Scanner(System.in);  //ÇÉÀ» ÀÔ·Â¹Ş±â À§ÇÑ Scanner °´Ã¼ 
+	private int lastJ = 0;								//ë³´ë„ˆìŠ¤ í”„ë ˆì„ ì²˜ë¦¬ë¥¼ ìœ„í•´ 10í”„ë ˆì„ì˜ forë¬¸ì˜ ë§ˆì§€ë§‰ Jê°’ì„ ì €ì¥í•˜ëŠ” ë³€ìˆ˜ 
+	private String pin_value = "";                      //ì“°ëŸ¬ëœ¨ë¦° í•€ì˜ ê°œìˆ˜ë¥¼ ë³´ì—¬ì£¼ê¸° ìœ„í•œ ë³€ìˆ˜ (í™”ë©´ ì¶œë ¥ ì‹œ ì‚¬ìš©ë¨) 
+			pin[j] = FirstPinCheck(pin[j], j);
+				pin[j+1] = SecoundPinCheck(pin[j+1], j);
 	
-	//10 ÇÁ·¹ÀÓ Ã³¸® 
-	public void TenFrame(int i) {
+			pin[lastJ + 1] = SecoundPinCheck(pin[lastJ + 1], lastJ);
+			pin[lastJ + 1] = FirstPinCheck(pin[lastJ + 1], lastJ);
 		
-		System.out.println();
-		System.out.print("10 ÇÁ·¹ÀÓ Ã¹¹øÂ° : ");		
+			pin[lastJ + 1] = FirstPinCheck(pin[lastJ + 1], lastJ);
+		System.out.print("10 í”„ë ˆì„ ì²«ë²ˆì§¸ : ");		
 		
 		for(int j = i; j < 20; j++)
 		{
@@ -26,7 +26,7 @@ public class BowlingGame {
 			if(j > 18 && strike > 0)
 			{
 				System.out.println();
-				System.out.print("10 ÇÁ·¹ÀÓ µÎ¹øÂ° : ");
+				System.out.print("10 í”„ë ˆì„ ë‘ë²ˆì§¸ : ");
 			}
 			
 			if(j > 18 && spare == 1)
@@ -54,22 +54,22 @@ public class BowlingGame {
 			{
 				SpareScore(j);
 				System.out.println();
-				System.out.print("10 ÇÁ·¹ÀÓ µÎ¹øÂ° : ");
+				System.out.print("10 í”„ë ˆì„ ë‘ë²ˆì§¸ : ");
 				pin[j+1] = clearpin.nextInt();
 				SecoundPinCheck(pin[j+1], j);
 				Spare(j);
 			}
 		}
 	
-		//º¸³Ê½º ÇÁ·¹ÀÓ 
+		//ë³´ë„ˆìŠ¤ í”„ë ˆì„ 
 		if(strike == 1 || strike == 2 || spare == 1)
 		{
 			System.out.println();
-			System.out.print("10 ÇÁ·¹ÀÓ ¼¼¹øÂ° : ");
+			System.out.print("10 í”„ë ˆì„ ì„¸ë²ˆì§¸ : ");
 			pin[lastJ + 1] = clearpin.nextInt();
 		}
 		
-		//10ÇÁ·¹ÀÓ Ã¹¹øÂ°¸¸ ½ºÆ®¶óÀÌÅ©ÀÏ °æ¿ì 
+		//10í”„ë ˆì„ ì²«ë²ˆì§¸ë§Œ ìŠ¤íŠ¸ë¼ì´í¬ì¼ ê²½ìš° 
 		if(strike == 1)
 		{
 			SecoundPinCheck(pin[lastJ + 1], lastJ);
@@ -91,7 +91,7 @@ public class BowlingGame {
 			Scoreboard.print(pin_value, score_value);
 		}
 		
-		//10ÇÁ·¹ÀÓ Ã¹¹øÂ°¿Í µÎ¹øÂ°°¡ ½ºÆ®¶óÀÌÅ©ÀÏ °æ¿ì 
+		//10í”„ë ˆì„ ì²«ë²ˆì§¸ì™€ ë‘ë²ˆì§¸ê°€ ìŠ¤íŠ¸ë¼ì´í¬ì¼ ê²½ìš° 
 		if(strike == 2)
 		{
 			FirstPinCheck(pin[lastJ + 1], lastJ);
@@ -113,7 +113,7 @@ public class BowlingGame {
 			Scoreboard.print(pin_value, score_value);
 		}
 		
-		//10ÇÁ·¹ÀÓ Ã¹¹øÂ° µÎ¹øÂ°°¡ ½ºÆä¾îÀÏ °æ¿ì 
+		//10í”„ë ˆì„ ì²«ë²ˆì§¸ ë‘ë²ˆì§¸ê°€ ìŠ¤í˜ì–´ì¼ ê²½ìš° 
 		if(spare == 1)
 		{
 			FirstPinCheck(pin[lastJ + 1], lastJ);
@@ -138,12 +138,12 @@ public class BowlingGame {
 		GameOver();
 	}
 
-	//°ÔÀÓ ¿Ï·á Ã³¸® 
+	//ê²Œì„ ì™„ë£Œ ì²˜ë¦¬ 
 	public void GameOver() {
 		try {
 			System.out.println();
-			System.out.println("°ÔÀÓÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");
-			System.out.println("ÃÖÁ¾ Á¡¼ö´Â " + score + "Á¡ÀÔ´Ï´Ù.");
+			System.out.println("ê²Œì„ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+			System.out.println("ìµœì¢… ì ìˆ˜ëŠ” " + score + "ì ì…ë‹ˆë‹¤.");
 			throw new GameOverException();
 		} catch (GameOverException e) {
 			System.out.println();
@@ -151,32 +151,32 @@ public class BowlingGame {
 		}
 	}
 	
-	//Ã¹¹øÂ° ÀÔ·Â¹ŞÀº ÇÉÀÇ À¯È¿¼º °Ë»ç (0 ~ 10)
+	//ì²«ë²ˆì§¸ ì…ë ¥ë°›ì€ í•€ì˜ ìœ íš¨ì„± ê²€ì‚¬ (0 ~ 10)
 	public int FirstPinCheck(int first_pin, int i) {
 		
 		while(first_pin < 0 || first_pin > 10)
 		{		
-			System.out.println("0 ~ 10 »çÀÌÀÇ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
-			System.out.print("ÀÔ·Â : ");		
+			System.out.println("0 ~ 10 ì‚¬ì´ì˜ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			System.out.print("ì…ë ¥ : ");		
 			first_pin = clearpin.nextInt();	
 			
 		}	
 		return first_pin;
 	}
 	
-	//µÎ¹øÂ° ÀÔ·Â¹ŞÀº ÇÉÀÇ À¯È¿¼º °Ë»ç (Ã¹¹øÂ° ÇÉ°úÀÇ ÇÕÀÌ 10À» ÃÊ°úÇØ¼­´Â ¾ÈµÊ)
+	//ë‘ë²ˆì§¸ ì…ë ¥ë°›ì€ í•€ì˜ ìœ íš¨ì„± ê²€ì‚¬ (ì²«ë²ˆì§¸ í•€ê³¼ì˜ í•©ì´ 10ì„ ì´ˆê³¼í•´ì„œëŠ” ì•ˆë¨)
 	public int SecoundPinCheck(int secound_pin, int i) {
 		
 		while(secound_pin + pin[i] > 10 || secound_pin + pin[i] < 0)
 		{
-			System.out.println("ÇÉÀÇ ÇÕ°è´Â 10À» ÃÊ°úÇÒ ¼ö ¾ø½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.");
-			System.out.print("ÀÔ·Â : ");
+			System.out.println("í•€ì˜ í•©ê³„ëŠ” 10ì„ ì´ˆê³¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.");
+			System.out.print("ì…ë ¥ : ");
 			secound_pin = clearpin.nextInt();
 		}	
 		return secound_pin;
 	}
 	
-	//Áß°£´Ü°ÂÀÇ Á¡¼ö °è»ê ¹× È­¸é Ãâ·ÂÀ» À§ÇÑ ÇÔ¼ö (½ºÆ®¶óÀÌÅ©°¡ ¾Æ´Ò °æ¿ì¸¸ È£Ãâ)
+	//ì¤‘ê°„ë‹¨ê±”ì˜ ì ìˆ˜ ê³„ì‚° ë° í™”ë©´ ì¶œë ¥ì„ ìœ„í•œ í•¨ìˆ˜ (ìŠ¤íŠ¸ë¼ì´í¬ê°€ ì•„ë‹ ê²½ìš°ë§Œ í˜¸ì¶œ)
 	public void SpareScore(int i) {
 		
 		pin_value += pin[i] + "|";
@@ -208,7 +208,7 @@ public class BowlingGame {
 		}
 	}
 	
-	//½ºÆ®¶óÀÌÅ© Ã³¸® (Á¡¼ö °è»ê ¹× È­¸é Ãâ·Â)
+	//ìŠ¤íŠ¸ë¼ì´í¬ ì²˜ë¦¬ (ì ìˆ˜ ê³„ì‚° ë° í™”ë©´ ì¶œë ¥)
 	public void Strike(int i) 
 	{
 		if(i >= 18)
@@ -253,7 +253,7 @@ public class BowlingGame {
 		}		
 	}
 	
-	//½ºÆä¾î Ã³¸® (Á¡¼ö °è»ê ¹× È­¸é Ãâ·Â)
+	//ìŠ¤í˜ì–´ ì²˜ë¦¬ (ì ìˆ˜ ê³„ì‚° ë° í™”ë©´ ì¶œë ¥)
 	public void Spare(int i) 
 	{
 		if(strike == 1)
@@ -286,10 +286,10 @@ public class BowlingGame {
 		}
 	}
 	
-	//½ºÆ®¶óÀÌÅ©³ª ½ºÆä¾î Ã³¸®°¡ µÇÁö ¾Ê¾ÒÀ» °æ¿ì °ªÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö (10ÇÁ·¹ÀÓÀÇ º¸³Ê½º ÇÁ·¹ÀÓÀÌ ¹ß»ıÇÏÁö ¾Ê¾ÒÀ» °æ¿ì È­ ³ĞÀÌ¸¦ ¸ÂÃß±â À§ÇØ ÇÔ¼ö¸¦ ºĞ¸®) 
+	//ìŠ¤íŠ¸ë¼ì´í¬ë‚˜ ìŠ¤í˜ì–´ ì²˜ë¦¬ê°€ ë˜ì§€ ì•Šì•˜ì„ ê²½ìš° ê°’ì„ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜ (10í”„ë ˆì„ì˜ ë³´ë„ˆìŠ¤ í”„ë ˆì„ì´ ë°œìƒí•˜ì§€ ì•Šì•˜ì„ ê²½ìš° í™” ë„“ì´ë¥¼ ë§ì¶”ê¸° ìœ„í•´ í•¨ìˆ˜ë¥¼ ë¶„ë¦¬) 
 	public void StringFormatGutterFrame(int i)
 	{
-		//10ÇÁ·¹ÀÓÀÏ °æ¿ì 
+		//10í”„ë ˆì„ì¼ ê²½ìš° 
 		if(i == 18)
 		{
 			score_value += String.format("%5d|", score);
@@ -303,7 +303,7 @@ public class BowlingGame {
 		return;
 	}
 	
-	//gutter Ã¼Å© 
+	//gutter ì²´í¬ 
 	public String gutterCheck(int i) {
 		
 		if(pin[i+1] == 0 && i < 18)
@@ -319,13 +319,13 @@ public class BowlingGame {
 		return pin[i+1] + "|";
 	}
 	
-	//Ã¹¹øÂ° ÇÉÀÇ °ª ¼³Á¤ 
+	//ì²«ë²ˆì§¸ í•€ì˜ ê°’ ì„¤ì • 
 	public void SetFirstPin(int first_pin, int i)
 	{
 		pin[i] = first_pin;
 	}
 	
-	//µÎ¹øÂ° ÇÉÀÇ °ª ¼³Á¤ 
+	//ë‘ë²ˆì§¸ í•€ì˜ ê°’ ì„¤ì • 
 	public void SetSecoundPin(int secound_pin, int i)
 	{
 		pin[i+1] = secound_pin;
